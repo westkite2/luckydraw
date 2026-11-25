@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090808">
+<title>Pantastic 2026! We Made IT! | 당첨자 추첨</title>
+<style>
+  :root{color-scheme:dark;--bg:#090808;--text:#fff;--muted:#b1a5a7;--subtle:#a19799;--accent:#ff5460;--ink:#240508;--font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;--mono:ui-monospace,"Cascadia Mono",Consolas,monospace}
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;min-width:280px;min-height:100vh;min-height:100svh;background:radial-gradient(ellipse 65% 32% at 50% 1%,#200d11 0%,transparent 88%),var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+  button,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:default}button:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:4px}svg{flex-shrink:0}
+  .shell{width:min(1120px,calc(100% - 72px));margin-inline:auto}
+  .top{border-bottom:1px solid #ffffff12}
+  .top-inner{min-height:73px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .top-actions,.entry-count,.upload,.eyebrow,.deck-label,.draw-btn{display:flex;align-items:center}
+  .brand{min-width:0;flex:1;color:#fff;font-size:clamp(17px,2.45vw,25px);font-weight:850;line-height:1.14;letter-spacing:-.045em}
+  .brand .red{color:var(--accent)}
+  .brand .phrase{display:inline-block;white-space:nowrap}
+  .top-actions{gap:12px;flex-shrink:0}
+  .entry-count{gap:7px;color:var(--muted);font-size:12px;white-space:nowrap}
+  .entry-count strong{color:var(--text);font:700 13px var(--mono);font-variant-numeric:tabular-nums}
+  .upload{justify-content:center;gap:8px;min-height:38px;padding:0 13px;border-radius:9px;border:1px solid #45373a;background:#181415;color:var(--text);font-size:12px;font-weight:750;white-space:nowrap;transition:background .15s,border-color .15s}
+  .upload:hover:not(:disabled){background:#291c20;border-color:#70565b}.upload:disabled{opacity:.46}
+  main{width:min(690px,calc(100% - 48px));margin:auto;display:flex;flex-direction:column;align-items:center;padding:48px 0 45px}
+  .intro{text-align:center;margin-bottom:31px}
+  .eyebrow{justify-content:center;gap:8px;color:var(--accent);font:700 11px var(--mono);letter-spacing:.19em}
+  .eyebrow svg{width:13px;height:13px}
+  h1{margin:13px 0 0;font-size:clamp(34px,5.6vw,60px);line-height:1.12;letter-spacing:-.085em;font-weight:850;word-break:keep-all}
+  .machine{width:100%;padding:14px;border:1px solid #3d2a2d;border-radius:21px;background:linear-gradient(160deg,#211719 0%,#151113 75%);box-shadow:0 16px 48px #0007,0 1px #ffffff0c inset}
+  .deck-head{min-width:0;min-height:32px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:0 5px}
+  .deck-label{gap:8px;color:#c2b2b5;white-space:nowrap;font:700 10px var(--mono);letter-spacing:.16em;line-height:20px}
+  .lamp{width:6px;height:6px;border-radius:50%;background:#9c777d;box-shadow:0 0 0 3px #e48b9413}
+  .state{color:#cbbec0;border:1px solid #4d363b;background:#2a1e21;border-radius:5px;padding:3px 8px;font:750 9px var(--mono);line-height:12px;letter-spacing:.12em;white-space:nowrap}
+  .machine[data-state="ready"] .lamp,.machine[data-state="spinning"] .lamp,.machine[data-state="done"] .lamp{background:var(--accent);box-shadow:0 0 11px #ff546054,0 0 0 3px #ff546019}
+  .machine[data-state="spinning"] .state,.machine[data-state="done"] .state{color:var(--accent);border-color:#7f363f;background:#35191c}
+  .viewport{--step:clamp(70px,12vw,96px);position:relative;isolation:isolate;overflow:hidden;height:calc(var(--step) * 2 + 15px);border:1px solid #492e33;border-radius:12px;background:radial-gradient(ellipse at center,#251419 0%,#120d0f 65%,#0c090a 100%)}
+  .selection{z-index:0;position:absolute;top:50%;left:0;right:0;height:var(--step);transform:translateY(-50%);border-block:1px solid #793641;pointer-events:none;background:linear-gradient(90deg,#431c24bc,#34161dbc 50%,#431c24bc);transition:background .25s,border-color .25s}
+  .selection::before,.selection::after{position:absolute;content:"";top:50%;width:7px;height:7px;border-top:1px solid var(--accent);border-right:1px solid var(--accent);opacity:.68}
+  .selection::before{left:15px;transform:translateY(-50%) rotate(45deg)}.selection::after{right:15px;transform:translateY(-50%) rotate(225deg)}
+  .track-mask{position:absolute;z-index:1;inset:0;pointer-events:none;contain:layout paint}
+  .viewport::before,.viewport::after{content:"";position:absolute;z-index:2;left:0;right:0;height:26%;pointer-events:none}
+  .viewport::before{top:0;background:linear-gradient(to bottom,#100c0f 0%,#100c0f00 100%)}
+  .viewport::after{bottom:0;background:linear-gradient(to top,#100c0f 0%,#100c0f00 100%)}
+  .track{position:absolute;top:50%;left:0;right:0;height:0}
+  .machine[data-state="spinning"] .track{will-change:transform}
+  .reel-cell{position:absolute;left:25px;right:25px;height:var(--step);display:flex;align-items:center;justify-content:center;font-weight:850;line-height:1;letter-spacing:-.045em;color:#fff5f6}
+  .reel-name{display:block;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:pre;text-align:center;line-height:1.12;unicode-bidi:plaintext}
+  .reel-cell.is-empty{font-size:clamp(19px,3.8vw,31px);letter-spacing:-.065em;color:#c1a8ad}
+  .reel-cell.is-empty.preview{font:600 29px var(--mono);color:#96767c;letter-spacing:.22em}
+  .machine[data-state="done"] .selection{background:linear-gradient(90deg,#4b1b24,#3f1720 50%,#4b1b24);border-color:#ac4a56}
+  .machine[data-state="done"] .reel-cell.is-center{color:var(--accent);text-shadow:0 0 30px #ff546041}
+  .controls{width:100%;margin-top:19px;text-align:center}
+  .draw-btn{position:relative;justify-content:center;gap:10px;width:100%;min-height:59px;padding:12px 20px;border:1px solid #ff7c85;border-radius:12px;background:var(--accent);color:var(--ink);font-size:18px;font-weight:850;letter-spacing:-.045em;box-shadow:0 4px 24px #ff435822;transition:background .15s,box-shadow .15s,transform .15s}
+  .draw-btn:hover:not(:disabled){background:#ff737d;box-shadow:0 5px 28px #ff435843;transform:translateY(-1px)}.draw-btn:active:not(:disabled){transform:translateY(1px)}
+  .draw-btn:disabled{color:#b3a4a6;background:#282123;border-color:#473639;box-shadow:none}
+  .draw-btn:disabled.is-spinning{color:#ffe6e8;background:#411c22;border-color:#813a46}
+  .draw-btn.is-spinning svg{animation:rotate 1.15s linear infinite}
+  @keyframes rotate{to{transform:rotate(360deg)}}
+  .hint{margin:13px 0 0;min-height:1.6em;color:var(--muted);font-size:13px;line-height:1.6;word-break:keep-all}
+  .hint.is-winner{color:var(--accent);font-weight:800}
+  .full-winner{margin-top:9px;padding:7px 11px;border:1px solid #6c3942;border-radius:8px;background:#27181b;color:#ffc4ca;font-size:12px;font-weight:750}
+  .full-winner:hover{background:#3d242a}.full-winner[hidden]{display:none}
+  .winner-name{max-height:min(45vh,320px);margin:0;overflow:auto;overscroll-behavior:contain;padding:12px;border:1px solid #58343c;border-radius:8px;background:#100c0d;color:#fff;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;unicode-bidi:plaintext}
+  .bottom{border-top:1px solid #ffffff12}
+  .bottom-inner{min-height:55px;display:grid;place-items:center;color:var(--subtle);font-size:11px;line-height:1.5}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+  dialog{width:min(520px,calc(100% - 30px));max-height:calc(100% - 30px);margin:auto;padding:0;border:1px solid #574146;border-radius:18px;background:#181415;color:var(--text);box-shadow:0 24px 96px #000b;overflow:auto}
+  dialog::backdrop{background:#000a;backdrop-filter:blur(5px)}
+  .editor{padding:24px;display:grid;gap:15px}
+  .editor-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px}
+  .editor-kicker{margin:0 0 6px;color:var(--accent);font:700 10px var(--mono);letter-spacing:.15em}
+  .editor h2{margin:0;font-size:26px;letter-spacing:-.06em}
+  .icon-button{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;border:1px solid #4a3b3e;background:#251c1f;color:#f7edef}
+  .icon-button:hover,.cancel:hover{background:#3d2b30}
+  .instructions{margin:0;color:#c6babc;font-size:13px;line-height:1.7;word-break:keep-all}
+  .field{display:grid;gap:7px;min-width:0}
+  .field label{font-size:12px;font-weight:800;color:#f2e8ea}
+  textarea{display:block;width:100%;min-height:150px;height:min(29vh,230px);resize:vertical;padding:12px 13px;border:1px solid #57474b;border-radius:9px;background:#100c0d;color:var(--text);line-height:1.55;font-size:16px;caret-color:var(--accent)}
+  textarea::placeholder{color:#a19094}textarea[aria-invalid="true"]{border-color:#ff9d91}
+  .field-foot{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:12px;color:#b9acaf;line-height:1.5}
+  #edit-count{white-space:nowrap;font-variant-numeric:tabular-nums}
+  #error{color:#ffaaa0;overflow-wrap:anywhere}
+  .editor-actions{display:flex;justify-content:flex-end;gap:8px}
+  .editor-actions button{min-height:41px;padding:0 17px;border-radius:8px;font-size:14px;font-weight:800}
+  .cancel{background:#292124;color:#f3e8ea;border:1px solid #574449}
+  .save{background:var(--accent);color:var(--ink);border:1px solid #ff7c85}.save:hover{background:#ff7983}
+  @media(max-width:600px){.shell{width:calc(100% - 32px)}.top-inner{min-height:65px;padding-block:9px;gap:10px}.top-actions{gap:8px}.brand{font-size:18px}.entry-count svg{display:none}.upload{min-height:35px;padding-inline:9px;gap:5px}main{width:calc(100% - 32px);padding:40px 0}.intro{margin-bottom:25px}.machine{padding:10px;border-radius:16px}.viewport{border-radius:9px}.selection::before{left:9px}.selection::after{right:9px}.reel-cell{left:19px;right:19px}.bottom-inner{min-height:51px}.editor{padding:18px}}
+  @media(max-width:400px){.top-actions{flex-direction:column-reverse;align-items:flex-end;gap:4px}.brand{font-size:17px}.entry-count{font-size:10px}.entry-count strong{font-size:11px}.upload{font-size:11px}.upload svg{width:12px;height:12px}}
+  @media(max-width:355px){main,.shell{width:calc(100% - 24px)}.brand{font-size:16px}}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" style="position:absolute"><defs>
+  <symbol id="icon-upload" viewBox="0 0 24 24"><path d="M12 15V4m-4 4 4-4 4 4M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-people" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2m16 0v-2a4 4 0 0 0-3-3.87M17 3.13a4 4 0 0 1 0 7.75" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/><circle cx="10" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="1.65"/></symbol>
+  <symbol id="icon-spark" viewBox="0 0 24 24"><path d="M12 2.7c1.5 5.7 3.5 7.7 9.3 9.3-5.8 1.6-7.8 3.6-9.3 9.3-1.5-5.7-3.5-7.7-9.3-9.3 5.8-1.6 7.8-3.6 9.3-9.3Z" fill="currentColor"/></symbol>
+  <symbol id="icon-spin" viewBox="0 0 24 24"><path d="M20.6 10a8.5 8.5 0 0 0-14.5-4l-2 2.2m0 0V4m0 4.2h4.2M3.4 14a8.5 8.5 0 0 0 14.5 4l2-2.2m0 0V20m0-4.2h-4.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+</defs></svg>
+<header class="top">
+  <div class="shell top-inner">
+    <div class="brand"><span class="phrase"><span class="red">Pan</span>tastic 2026!</span> <span class="phrase">We Made <span class="red">IT</span>!</span></div>
+    <div class="top-actions">
+      <div class="entry-count"><svg width="15" height="15" aria-hidden="true"><use href="#icon-people"/></svg><span>후보자 <strong id="count">0</strong>명</span></div>
+      <button type="button" id="upload" class="upload" aria-haspopup="dialog"><svg width="15" height="15" aria-hidden="true"><use href="#icon-upload"/></svg>후보자 명단 등록</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="intro">
+    <div class="eyebrow" aria-hidden="true"><svg><use href="#icon-spark"/></svg> LUCKY DRAW</div>
+    <h1>행운의 주인공은?</h1>
+  </div>
+  <section class="machine" id="machine" data-state="empty" aria-label="당첨자 추첨 슬롯">
+    <div class="deck-head" aria-hidden="true"><span class="deck-label"><span class="lamp"></span> DRAW SLOT</span><span class="state" id="state">STANDBY</span></div>
+    <div class="viewport" id="viewport" aria-hidden="true">
+      <div class="selection"></div>
+      <div class="track-mask"><div class="track" id="track">
+        <div class="reel-cell"><span class="reel-name" dir="auto"></span></div><div class="reel-cell"><span class="reel-name" dir="auto"></span></div><div class="reel-cell"><span class="reel-name" dir="auto"></span></div><div class="reel-cell"><span class="reel-name" dir="auto"></span></div>
+      </div></div>
+    </div>
+    <p class="sr-only" id="announcement" role="status" aria-live="polite" aria-atomic="true"></p>
+  </section>
+  <div class="controls">
+    <button type="button" class="draw-btn" id="draw" disabled><svg width="22" height="22" aria-hidden="true"><use href="#icon-spin"/></svg><span id="draw-label">돌리기</span></button>
+    <p class="hint" id="hint">상단의 ‘후보자 명단 등록’ 버튼으로 시작하세요.</p>
+    <button type="button" class="full-winner" id="full-winner" aria-haspopup="dialog" hidden>전체 이름 보기</button>
+  </div>
+</main>
+<footer class="bottom"><div class="shell bottom-inner">IT협력팀</div></footer>
+<dialog id="dialog" aria-labelledby="editor-title" aria-describedby="editor-instructions">
+  <form class="editor" id="editor" novalidate>
+    <div class="editor-head">
+      <div><p class="editor-kicker" aria-hidden="true">ENTRY LIST</p><h2 id="editor-title">후보자 명단</h2></div>
+      <button class="icon-button" id="close" type="button" aria-label="닫기"><svg width="18" height="18" aria-hidden="true"><use href="#icon-close"/></svg></button>
+    </div>
+    <p class="instructions" id="editor-instructions">한 줄에 한 명씩, 최대 1,000명까지 등록할 수 있습니다. 같은 이름이 여러 줄이면 각 줄을 별도 후보자로 추첨합니다.</p>
+    <div class="field">
+      <label for="names">후보자 이름</label>
+      <textarea id="names" name="names" rows="7" placeholder="김하늘&#10;이바다&#10;박별" autocomplete="off" spellcheck="false" aria-describedby="editor-instructions error"></textarea>
+      <div class="field-foot"><span id="error" aria-live="polite"></span><span id="edit-count">0 / 1,000명</span></div>
+    </div>
+    <div class="editor-actions"><button type="button" class="cancel" id="cancel">취소</button><button type="submit" class="save">저장</button></div>
+  </form>
+</dialog>
+<dialog id="winner-dialog" aria-labelledby="winner-title">
+  <div class="editor">
+    <div class="editor-head"><div><p class="editor-kicker" aria-hidden="true">WINNER</p><h2 id="winner-title">당첨자 전체 이름</h2></div>
+    <button class="icon-button" id="winner-close" type="button" aria-label="닫기"><svg width="18" height="18" aria-hidden="true"><use href="#icon-close"/></svg></button></div>
+    <p class="winner-name" id="winner-name" dir="auto" tabindex="0"></p>
+  </div>
+</dialog>
+<script>
+'use strict';
+(() => {
+  const $ = id => document.getElementById(id);
+  const MAX_NAMES = 1000, DURATION = 7000;
+  const machine = $('machine'), viewport = $('viewport'), track = $('track');
+  const cells = Array.from(track.children);
+  const upload = $('upload'), draw = $('draw'), drawLabel = $('draw-label');
+  const announcement = $('announcement'), hint = $('hint'), fullWinner = $('full-winner');
+  const dialog = $('dialog'), names = $('names'), error = $('error');
+  const winnerDialog = $('winner-dialog'), winnerName = $('winner-name');
+  const labels = cells.map(cell => cell.firstElementChild);
+  const number = new Intl.NumberFormat('ko-KR');
+  const segmenter = typeof Intl.Segmenter === 'function' ? new Intl.Segmenter('ko', {granularity:'grapheme'}) : null;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const fontContext = document.createElement('canvas').getContext('2d');
+  const fontFamily = getComputedStyle(cells[0]).fontFamily;
+  const fontWeight = getComputedStyle(cells[0]).fontWeight;
+  const sizes = new Map();
+  const randomWord = new Uint32Array(1);
+  const RANGE = 0x100000000;
+  let candidates = [], reel = [], selected = null, winner = null;
+  let spinning = false, center = 0, fraction = 0, step = 96, nameWidth = 600;
+  let lastPaintedIndex = -1;
+
+  cells.forEach((cell, index) => { cell.style.top = `calc(var(--step) * ${index - 2.5})`; });
+  const mod = (i, n) => ((i % n) + n) % n;
+
+  // Discard the incomplete tail before taking a remainder, so every index is equally likely.
+  function uniformInt(n) {
+    if (n === 1) return 0;
+    const ceiling = RANGE - RANGE % n;
+    do { crypto.getRandomValues(randomWord); } while (randomWord[0] >= ceiling);
+    return randomWord[0] % n;
+  }
+  function shuffle(entries) {
+    const copy = entries.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = uniformInt(i + 1);
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+
+  function parse(value) {
+    const entries = [];
+    const lines = value.split(/\r\n|[\n\r\u2028\u2029]/u);
+    let count = 0;
+    for (let i = 0; i < lines.length; i++) {
+      const name = lines[i].trim();
+      if (!name) continue;
+      count++;
+      if (count <= MAX_NAMES) entries.push({name});
+    }
+    const issue = count > MAX_NAMES ? `후보자는 최대 ${number.format(MAX_NAMES)}명까지 등록할 수 있습니다.` : '';
+    return {entries, count, issue};
+  }
+  function checkEditor(report = false) {
+    const parsed = parse(names.value);
+    $('edit-count').textContent = `${number.format(parsed.count)} / ${number.format(MAX_NAMES)}명`;
+    const issue = report || names.getAttribute('aria-invalid') === 'true' ? parsed.issue : '';
+    error.textContent = issue;
+    names.setAttribute('aria-invalid', String(Boolean(issue)));
+    return parsed;
+  }
+
+  function reelLabel(name) {
+    const known = sizes.get(name);
+    if (known !== undefined) return known;
+    const max = Math.floor(Math.min(68, step * .72));
+    const min = Math.min(max, 15);
+    // Keep the complete entry; bound only the text measuring and frame rendering work.
+    let text = name.slice(0, 512).replace(/[\uD800-\uDBFF]$/u, '');
+    let shortened = text.length < name.length;
+    const measure = (value, px) => {
+      fontContext.font = fontWeight + ' ' + px + 'px ' + fontFamily;
+      return fontContext.measureText(value).width;
+    };
+    const measured = measure(text, max);
+    let fit = Math.max(min, Math.min(max, Math.floor(max * nameWidth / Math.max(1, measured))));
+    while (fit > min && measure(text, fit) > nameWidth) fit--;
+    if (shortened || measure(text, fit) > nameWidth) {
+      const chars = segmenter ? Array.from(segmenter.segment(text), part => part.segment) : Array.from(text);
+      let lo = 0, hi = chars.length;
+      while (lo < hi) {
+        const mid = Math.ceil((lo + hi) / 2);
+        if (measure(chars.slice(0, mid).join('') + '…', fit) <= nameWidth) lo = mid;
+        else hi = mid - 1;
+      }
+      text = chars.slice(0, lo).join('') + '…';
+      shortened = true;
+    }
+    const label = {text, fit, shortened};
+    sizes.set(name, label);
+    return label;
+  }
+  function syncWinnerControl() {
+    fullWinner.hidden = !(winner && reelLabel(winner.name).shortened);
+  }
+  function paint(index, part = 0, force = false) {
+    center = index;
+    fraction = part;
+    track.style.transform = `translate3d(0,${Math.round(part * step * 10) / 10}px,0)`;
+    const replace = force || lastPaintedIndex !== index;
+    for (let i = 0; i < cells.length; i++) {
+      const cell = cells[i], offset = i - 2;
+      if (replace) {
+        const entry = reel.length ? reel[mod(index + offset, reel.length)] : null;
+        const label = entry ? reelLabel(entry.name) : null;
+        labels[i].textContent = label ? label.text : offset === 0 ? '명단을 등록해 주세요' : '— — —';
+        cell.style.fontSize = label ? `${label.fit}px` : '';
+        cell.classList.toggle('is-empty', !entry);
+        cell.classList.toggle('preview', !entry && offset !== 0);
+        cell.classList.toggle('is-center', offset === 0);
+      }
+      const focus = Math.max(0, 1 - Math.abs(offset + part));
+      cell.style.opacity = String(Math.round((.38 + .62 * focus) * 100) / 100);
+    }
+    lastPaintedIndex = index;
+  }
+  function resize() {
+    const height = cells[0].getBoundingClientRect().height;
+    const width = cells[0].clientWidth - 6;
+    if (height === step && width === nameWidth) return;
+    step = height;
+    nameWidth = Math.max(1, width);
+    sizes.clear();
+    paint(center, fraction, true);
+    syncWinnerControl();
+  }
+  function setState(state, message) {
+    const busy = state === 'spinning';
+    const complete = state === 'done';
+    machine.dataset.state = state;
+    $('state').textContent = {empty:'STANDBY',ready:'READY',spinning:'DRAWING',done:'WINNER'}[state];
+    draw.disabled = busy || !candidates.length;
+    upload.disabled = busy;
+    draw.classList.toggle('is-spinning', busy);
+    drawLabel.textContent = busy ? '추첨 중…' : '돌리기';
+    hint.textContent = message;
+    hint.classList.toggle('is-winner', complete);
+    syncWinnerControl();
+    announcement.textContent = complete ? (fullWinner.hidden ? `최종 당첨자: ${winner.name}` : '최종 당첨자가 확정되었습니다. 전체 이름 보기 버튼에서 확인하세요.') : message;
+  }
+  function setCandidates(entries) {
+    candidates = entries;
+    reel = entries;
+    winner = null;
+    selected = reel[0] ?? null;
+    $('count').textContent = number.format(entries.length);
+    sizes.clear();
+    paint(0, 0, true);
+    if (entries.length) setState('ready', `${entries.length}명이 등록되었습니다. 돌리기를 눌러 추첨하세요.`);
+    else setState('empty', '상단의 ‘후보자 명단 등록’ 버튼으로 시작하세요.');
+  }
+  upload.addEventListener('click', () => {
+    if (spinning || dialog.open) return;
+    names.value = candidates.map(entry => entry.name).join('\n');
+    names.setAttribute('aria-invalid', 'false');
+    checkEditor();
+    dialog.showModal();
+    names.focus();
+  });
+  $('close').addEventListener('click', () => dialog.close());
+  $('cancel').addEventListener('click', () => dialog.close());
+  fullWinner.addEventListener('click', () => {
+    if (!winner || winnerDialog.open) return;
+    winnerName.textContent = winner.name;
+    winnerDialog.showModal();
+    winnerName.scrollTop = 0;
+  });
+  $('winner-close').addEventListener('click', () => winnerDialog.close());
+  winnerDialog.addEventListener('close', () => { winnerName.textContent = ''; });
+  names.addEventListener('input', () => checkEditor());
+  $('editor').addEventListener('submit', event => {
+    event.preventDefault();
+    if (spinning || !dialog.open) return;
+    const parsed = checkEditor(true);
+    if (parsed.issue) { names.focus(); return; }
+    setCandidates(parsed.entries);
+    dialog.close();
+    upload.focus();
+  });
+
+  draw.addEventListener('click', () => {
+    if (spinning || !candidates.length || dialog.open) return;
+    const restoreFocus = document.activeElement === draw;
+    const n = candidates.length;
+    // Choose the winner directly from the full list before laying out the visual reel.
+    const picked = candidates[uniformInt(n)];
+    reel = shuffle(candidates);
+    const start = selected ? reel.indexOf(selected) : 0;
+    const landing = reel.indexOf(picked);
+    // At least three complete laps in the timeline, with enough travel for tiny lists.
+    const laps = Math.max(3, Math.ceil(84 / n));
+    const distance = laps * n + mod(start - landing, n);
+    const still = reduceMotion.matches;
+    spinning = true;
+    winner = null;
+    paint(start, 0, true);
+    setState('spinning', '후보자 중 당첨자를 뽑고 있습니다.');
+    const started = performance.now();
+    function frame(now) {
+      const t = Math.max(0, Math.min(1, (now - started) / DURATION));
+      if (t >= 1) {
+        selected = winner = picked;
+        paint(landing, 0, true);
+        spinning = false;
+        setState('done', '최종 당첨자가 확정되었습니다!');
+        if (restoreFocus && (document.activeElement === document.body || document.activeElement === draw)) draw.focus({preventScroll:true});
+        return;
+      }
+      if (!still) {
+        // Monotonic ease-out: constant direction, fast start, speed approaches zero.
+        const traveled = distance * (1 - (1 - t) ** 4);
+        const whole = Math.floor(traveled);
+        paint(mod(start - whole, n), traveled - whole);
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  });
+  paint(0, 0, true);
+  resize();
+  new ResizeObserver(resize).observe(viewport);
+})();
+</script>
+</body>
+</html>
