@@ -180,6 +180,143 @@
   cells.forEach((cell, index) => { cell.style.top = `calc(var(--step) * ${index - 2.5})`; });
   const mod = (i, n) => ((i % n) + n) % n;
 
+  // The reel position and sound cadence share the same ease-out curve.
+  const EASE_POWER = 4;
+  const easeOut = t => 1 - (1 - t) ** EASE_POWER;
+  const reelSpeed = t => (1 - t) ** (EASE_POWER - 1);
+
+  function makeDrawSound() {
+    let audio, output, clickBuffer, spin, chime;
+
+    function init() {
+      if (audio) return audio;
+      const AudioEngine = globalThis.AudioContext || globalThis.webkitAudioContext;
+      if (!AudioEngine) return null;
+      const ctx = new AudioEngine({latencyHint:'interactive'});
+      const master = ctx.createGain();
+      master.gain.value = .78;
+      master.connect(ctx.destination);
+      const buffer = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * .047), ctx.sampleRate);
+      const waveform = buffer.getChannelData(0);
+      let previousNoise = 0;
+      for (let i = 0; i < waveform.length; i++) {
+        const t = i / ctx.sampleRate;
+        const noise = Math.random() * 2 - 1;
+        const attack = Math.min(1, t / .0014);
+        const grit = .5 * (noise - .56 * previousNoise);
+        const ring = .31 * Math.sin(2 * Math.PI * 760 * t) + .15 * Math.sin(2 * Math.PI * 1510 * t);
+        waveform[i] = (grit + ring) * attack * Math.exp(-t * 118) * Math.min(1, (.047 - t) / .005);
+        previousNoise = noise;
+      }
+      clickBuffer = buffer;
+      output = master;
+      audio = ctx;
+      return audio;
+    }
+
+    function bus() {
+      const gain = audio.createGain();
+      gain.connect(output);
+      return gain;
+    }
+
+    function release(gain) {
+      if (!gain) return;
+      const now = audio.currentTime;
+      gain.gain.setValueAtTime(1, now);
+      gain.gain.linearRampToValueAtTime(0, now + .025);
+      setTimeout(() => gain.disconnect(), 60);
+    }
+
+    function tick(at, destination, speed, accented) {
+      const source = audio.createBufferSource();
+      const level = audio.createGain();
+      source.buffer = clickBuffer;
+      source.playbackRate.value = .81 + .3 * speed + (accented ? .04 : 0);
+      level.gain.value = (.13 + .18 * speed) * (accented ? 1.22 : 1);
+      source.connect(level);
+      level.connect(destination);
+      source.start(at);
+    }
+
+    function start() {
+      try {
+        const ctx = init();
+        if (!ctx) return;
+        release(chime);
+        chime = null;
+        const session = {lastCenter: 0, lastClickAt: -Infinity, count: 0, bus: null};
+        spin = session;
+        const ready = () => {
+          if (spin === session && ctx.state === 'running') session.bus = bus();
+        };
+        // Unlock on the button's user gesture without delaying the animation.
+        if (ctx.state === 'running') ready();
+        else ctx.resume().then(ready).catch(() => {});
+      } catch { /* Audio is optional on unsupported or restricted browsers. */ }
+    }
+
+    function move(traveled, rowsPerSecond) {
+      const session = spin;
+      if (!session) return;
+      // The closest row to the center changes halfway between two row positions.
+      const centeredRow = Math.floor(traveled + .5);
+      if (centeredRow <= session.lastCenter) return;
+      session.lastCenter = centeredRow;
+      if (!session.bus || audio.state !== 'running') return;
+      const now = audio.currentTime;
+      // At full speed one frame can advance many rows; never queue missed clicks.
+      if (now - session.lastClickAt < .026) return;
+      try {
+        const speed = Math.min(1, Math.sqrt(rowsPerSecond / 48));
+        tick(now + .004, session.bus, speed, session.count++ % 3 === 0);
+        session.lastClickAt = now;
+      } catch { /* Keep rendering if the audio device becomes unavailable. */ }
+    }
+
+    function bell(at, destination, hz, strength, length) {
+      for (const [ratio, mix, decay] of [[1, 1, 1], [2.003, .18, .52], [3.01, .055, .32]]) {
+        const tone = audio.createOscillator();
+        const envelope = audio.createGain();
+        const end = at + length * decay;
+        tone.type = 'sine';
+        tone.frequency.value = hz * ratio;
+        envelope.gain.setValueAtTime(.0001, at);
+        envelope.gain.linearRampToValueAtTime(strength * mix, at + .009);
+        envelope.gain.exponentialRampToValueAtTime(strength * mix * .33, at + length * decay * .36);
+        envelope.gain.exponentialRampToValueAtTime(.0001, end);
+        tone.connect(envelope);
+        envelope.connect(destination);
+        tone.start(at);
+        tone.stop(end + .01);
+      }
+    }
+
+    function finish() {
+      const current = spin;
+      spin = null;
+      try {
+        release(current?.bus);
+        if (!audio || audio.state !== 'running') return;
+        const out = bus();
+        chime = out;
+        const at = audio.currentTime + .015;
+        // A quick rising pickup opens into one bright, sustained major chord.
+        [523.25, 659.25, 783.99].forEach((note, i) => bell(at + .048 * i, out, note, .082, .39));
+        const chordAt = at + .145;
+        [[261.63, .11], [523.25, .084], [659.25, .077], [783.99, .089], [1046.50, .11]]
+          .forEach(([note, gain], i) => bell(chordAt + .007 * i, out, note, gain, 1.14));
+        setTimeout(() => {
+          if (chime === out) chime = null;
+          out.disconnect();
+        }, 1550);
+      } catch { /* The winner remains confirmed even if playback is unavailable. */ }
+    }
+
+    return {start, move, finish};
+  }
+  const drawSound = makeDrawSound();
+
   // Discard the incomplete tail before taking a remainder, so every index is equally likely.
   function uniformInt(n) {
     if (n === 1) return 0;
@@ -353,7 +490,9 @@
     winner = null;
     paint(start, 0, true);
     setState('spinning', '후보자 중 당첨자를 뽑고 있습니다.');
+    drawSound.start();
     const started = performance.now();
+    const maxRowsPerSecond = distance * EASE_POWER * 1000 / DURATION;
     function frame(now) {
       const t = Math.max(0, Math.min(1, (now - started) / DURATION));
       if (t >= 1) {
@@ -361,14 +500,16 @@
         paint(landing, 0, true);
         spinning = false;
         setState('done', '최종 당첨자가 확정되었습니다!');
+        drawSound.finish();
         if (restoreFocus && (document.activeElement === document.body || document.activeElement === draw)) draw.focus({preventScroll:true});
         return;
       }
       if (!still) {
         // Monotonic ease-out: constant direction, fast start, speed approaches zero.
-        const traveled = distance * (1 - (1 - t) ** 4);
+        const traveled = distance * easeOut(t);
         const whole = Math.floor(traveled);
         paint(mod(start - whole, n), traveled - whole);
+        drawSound.move(traveled, maxRowsPerSecond * reelSpeed(t));
       }
       requestAnimationFrame(frame);
     }
