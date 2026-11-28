@@ -6,14 +6,15 @@
 <meta name="theme-color" content="#090808">
 <title>Pantastic 2026! We Made IT! | 당첨자 추첨</title>
 <style>
-  :root{color-scheme:dark;--bg:#090808;--text:#fff;--muted:#b1a5a7;--subtle:#a19799;--accent:#ff5460;--ink:#240508;--font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;--mono:ui-monospace,"Cascadia Mono",Consolas,monospace}
+  @font-face{font-family:"Black Han Sans";font-style:normal;font-weight:400;font-display:swap;src:url("data:font/woff2;base64,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") format("woff2")}
+  :root{color-scheme:dark;--bg:#090808;--text:#fff;--muted:#b1a5a7;--subtle:#a19799;--accent:#ff5460;--launch-pink:linear-gradient(165deg,#ff646d 0%,#ed394b 52%,#c32338 100%);--ink:#240508;--font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;--mono:ui-monospace,"Cascadia Mono",Consolas,monospace}
   *,*::before,*::after{box-sizing:border-box}
   body{margin:0;min-width:280px;min-height:100vh;min-height:100svh;background:radial-gradient(ellipse 65% 32% at 50% 1%,#200d11 0%,transparent 88%),var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
   button,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:default}button:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:4px}svg{flex-shrink:0}
   .shell{width:min(1120px,calc(100% - 72px));margin-inline:auto}
   .top{border-bottom:1px solid #ffffff12}
   .top-inner{min-height:73px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-  .top-actions,.entry-count,.upload,.eyebrow,.deck-label,.draw-btn{display:flex;align-items:center}
+  .top-actions,.entry-count,.upload{display:flex;align-items:center}
   .brand{min-width:0;flex:1;color:#fff;font-size:clamp(17px,2.45vw,25px);font-weight:850;line-height:1.14;letter-spacing:-.045em}
   .brand .red{color:var(--accent)}
   .brand .phrase{display:inline-block;white-space:nowrap}
@@ -23,47 +24,40 @@
   .upload{justify-content:center;gap:8px;min-height:38px;padding:0 13px;border-radius:9px;border:1px solid #45373a;background:#181415;color:var(--text);font-size:12px;font-weight:750;white-space:nowrap;transition:background .15s,border-color .15s}
   .upload:hover:not(:disabled){background:#291c20;border-color:#70565b}.upload:disabled{opacity:.46}
   main{width:min(690px,calc(100% - 48px));margin:auto;display:flex;flex-direction:column;align-items:center;padding:48px 0 45px}
-  .intro{text-align:center;margin-bottom:31px}
-  .eyebrow{justify-content:center;gap:8px;color:var(--accent);font:700 11px var(--mono);letter-spacing:.19em}
-  .eyebrow svg{width:13px;height:13px}
-  h1{margin:13px 0 0;font-size:clamp(34px,5.6vw,60px);line-height:1.12;letter-spacing:-.085em;font-weight:850;word-break:keep-all}
-  .machine{width:100%;padding:14px;border:1px solid #3d2a2d;border-radius:21px;background:linear-gradient(160deg,#211719 0%,#151113 75%);box-shadow:0 16px 48px #0007,0 1px #ffffff0c inset}
-  .deck-head{min-width:0;min-height:32px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:0 5px}
-  .deck-label{gap:8px;color:#c2b2b5;white-space:nowrap;font:700 10px var(--mono);letter-spacing:.16em;line-height:20px}
-  .lamp{width:6px;height:6px;border-radius:50%;background:#9c777d;box-shadow:0 0 0 3px #e48b9413}
-  .state{color:#cbbec0;border:1px solid #4d363b;background:#2a1e21;border-radius:5px;padding:3px 8px;font:750 9px var(--mono);line-height:12px;letter-spacing:.12em;white-space:nowrap}
-  .machine[data-state="ready"] .lamp,.machine[data-state="spinning"] .lamp,.machine[data-state="done"] .lamp{background:var(--accent);box-shadow:0 0 11px #ff546054,0 0 0 3px #ff546019}
-  .machine[data-state="spinning"] .state,.machine[data-state="done"] .state{color:var(--accent);border-color:#7f363f;background:#35191c}
-  .viewport{--step:clamp(70px,12vw,96px);position:relative;isolation:isolate;overflow:hidden;height:calc(var(--step) * 2 + 15px);border:1px solid #492e33;border-radius:12px;background:radial-gradient(ellipse at center,#251419 0%,#120d0f 65%,#0c090a 100%)}
-  .selection{z-index:0;position:absolute;top:50%;left:0;right:0;height:var(--step);transform:translateY(-50%);border-block:1px solid #793641;pointer-events:none;background:linear-gradient(90deg,#431c24bc,#34161dbc 50%,#431c24bc);transition:background .25s,border-color .25s}
-  .selection::before,.selection::after{position:absolute;content:"";top:50%;width:7px;height:7px;border-top:1px solid var(--accent);border-right:1px solid var(--accent);opacity:.68}
+  .intro{text-align:center;margin-bottom:36px}
+  .eyebrow{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 13px;color:var(--accent);font:750 11px/1.35 var(--mono);letter-spacing:.18em;white-space:nowrap}
+  .eyebrow .star{font-family:"Segoe UI Symbol","Apple Symbols",system-ui,sans-serif;font-size:13px;line-height:1;letter-spacing:0}
+  h1{margin:0;color:#fff;font-size:clamp(33px,6.4vw,63px);line-height:1.08;letter-spacing:-.038em;word-break:keep-all}
+  .title-letters{font-weight:800}
+  .machine{width:100%;padding:clamp(8px,1.5vw,14px);border:1px solid #463035;border-radius:clamp(15px,2.4vw,22px);background:linear-gradient(160deg,#21181a 0%,#171214 72%);box-shadow:0 14px 34px #0007,inset 0 1px 0 #ffffff0b}
+  .viewport{--step:clamp(70px,12vw,96px);position:relative;isolation:isolate;overflow:hidden;height:calc(var(--step) * 2 + 15px);border:1px solid #492e35;border-radius:12px;background:linear-gradient(180deg,#100c0e,#120e10 50%,#100c0e);box-shadow:0 3px 14px #0005}
+  .selection{z-index:0;position:absolute;top:50%;left:0;right:0;height:var(--step);transform:translateY(-50%);border-block:1px solid #7b3544;pointer-events:none;background:linear-gradient(90deg,#35191e,#32181d 50%,#35191e);box-shadow:inset 0 1px 0 #ffffff08;transition:border-color .25s}
+  .selection::before,.selection::after{position:absolute;content:"";top:50%;width:7px;height:7px;border-top:1px solid var(--accent);border-right:1px solid var(--accent);opacity:.75}
   .selection::before{left:15px;transform:translateY(-50%) rotate(45deg)}.selection::after{right:15px;transform:translateY(-50%) rotate(225deg)}
   .track-mask{position:absolute;z-index:1;inset:0;pointer-events:none;contain:layout paint}
-  .viewport::before,.viewport::after{content:"";position:absolute;z-index:2;left:0;right:0;height:26%;pointer-events:none}
-  .viewport::before{top:0;background:linear-gradient(to bottom,#100c0f 0%,#100c0f00 100%)}
-  .viewport::after{bottom:0;background:linear-gradient(to top,#100c0f 0%,#100c0f00 100%)}
+  .viewport::before,.viewport::after{content:"";position:absolute;z-index:2;inset:0;border-radius:inherit;pointer-events:none}
+  .viewport::before{box-shadow:inset 0 10px 19px -9px #000b,inset 0 -10px 19px -9px #000b,inset 10px 0 18px -13px #0009,inset -10px 0 18px -13px #0009}
+  .viewport::after{background:linear-gradient(180deg,#100c0e 0%,#100c0e00 27%,#100c0e00 73%,#100c0e 100%)}
   .track{position:absolute;top:50%;left:0;right:0;height:0}
   .machine[data-state="spinning"] .track{will-change:transform}
   .reel-cell{position:absolute;left:25px;right:25px;height:var(--step);display:flex;align-items:center;justify-content:center;font-weight:850;line-height:1;letter-spacing:-.045em;color:#fff5f6}
   .reel-name{display:block;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:pre;text-align:center;line-height:1.12;unicode-bidi:plaintext}
-  .reel-cell.is-empty{font-size:clamp(19px,3.8vw,31px);letter-spacing:-.065em;color:#c1a8ad}
-  .reel-cell.is-empty.preview{font:600 29px var(--mono);color:#96767c;letter-spacing:.22em}
-  .machine[data-state="done"] .selection{background:linear-gradient(90deg,#4b1b24,#3f1720 50%,#4b1b24);border-color:#ac4a56}
-  .machine[data-state="done"] .reel-cell.is-center{color:var(--accent);text-shadow:0 0 30px #ff546041}
-  .controls{width:100%;margin-top:19px;text-align:center}
-  .draw-btn{position:relative;justify-content:center;gap:10px;width:100%;min-height:59px;padding:12px 20px;border:1px solid #ff7c85;border-radius:12px;background:var(--accent);color:var(--ink);font-size:18px;font-weight:850;letter-spacing:-.045em;box-shadow:0 4px 24px #ff435822;transition:background .15s,box-shadow .15s,transform .15s}
-  .draw-btn:hover:not(:disabled){background:#ff737d;box-shadow:0 5px 28px #ff435843;transform:translateY(-1px)}.draw-btn:active:not(:disabled){transform:translateY(1px)}
-  .draw-btn:disabled{color:#b3a4a6;background:#282123;border-color:#473639;box-shadow:none}
-  .draw-btn:disabled.is-spinning{color:#ffe6e8;background:#411c22;border-color:#813a46}
-  .draw-btn.is-spinning svg{animation:rotate 1.15s linear infinite}
-  @keyframes rotate{to{transform:rotate(360deg)}}
+  .machine[data-state="done"] .selection{background:linear-gradient(90deg,#481d26,#3d1921 50%,#481d26);border-color:#a04555;box-shadow:inset 0 1px 0 #ff879124}
+  .machine[data-state="empty"] .reel-cell.is-center{color:#b8afb3}
+  .machine[data-state="done"] .reel-cell.is-center{text-shadow:0 0 23px #ff53654a}
+  .controls{width:100%;margin-top:31px;text-align:center}
+  .draw-btn{position:relative;isolation:isolate;display:block;width:clamp(118px,21vw,156px);aspect-ratio:1;margin-inline:auto;padding:0;border:1px solid #55353b;border-radius:50%;background:linear-gradient(145deg,#392b2d,#171113 55%,#100c0d);box-shadow:0 4px 0 #090607,0 13px 30px #0009,inset 0 1px 2px #ffffff24;touch-action:manipulation}
+  .draw-btn::before{content:"";position:absolute;inset:6px;border-radius:50%;background:#14080b;box-shadow:0 1px 1px #ff9da52b,inset 0 4px 9px #000c}
+  .draw-face{position:absolute;inset:11px;display:grid;place-items:center;border:1px solid #ff8c94;border-radius:50%;background:radial-gradient(ellipse at 37% 12%,#ffabb28a,transparent 64%),var(--launch-pink);color:#fff;font-size:clamp(18px,2.5vw,23px);font-weight:850;letter-spacing:-.035em;text-shadow:0 1px 2px #6f0c19a0;transform:translateY(-7px);box-shadow:0 3px 0 #b02134,0 8px 0 #791626,0 11px 12px #0008,inset 0 2px 2px #ffdddf82,inset 0 -5px 11px #8f182c52;transition:transform .13s ease-out,box-shadow .13s ease-out,filter .13s ease-out}
+  .draw-btn:hover:not(:disabled) .draw-face{filter:brightness(1.08)}
+  .draw-btn:focus-visible{outline-offset:5px}
+  .draw-btn:active:not(:disabled) .draw-face,.draw-btn.is-spinning .draw-face{transform:translateY(2px);box-shadow:0 1px 0 #731827,0 2px 5px #0009,inset 0 2px 8px #8f1a2a6b;filter:brightness(.93)}
+  .draw-btn:disabled:not(.is-spinning) .draw-face{border-color:#775459;background:radial-gradient(ellipse at 36% 18%,#865b6380,transparent 65%),linear-gradient(160deg,#62434a,#462a30 60%,#371f25);color:#ebd0d4;text-shadow:none;box-shadow:0 3px 0 #49282f,0 8px 0 #2a171a,0 11px 12px #0008,inset 0 2px 2px #cf9da23a}
   .hint{margin:13px 0 0;min-height:1.6em;color:var(--muted);font-size:13px;line-height:1.6;word-break:keep-all}
   .hint.is-winner{color:var(--accent);font-weight:800}
   .full-winner{margin-top:9px;padding:7px 11px;border:1px solid #6c3942;border-radius:8px;background:#27181b;color:#ffc4ca;font-size:12px;font-weight:750}
   .full-winner:hover{background:#3d242a}.full-winner[hidden]{display:none}
   .winner-name{max-height:min(45vh,320px);margin:0;overflow:auto;overscroll-behavior:contain;padding:12px;border:1px solid #58343c;border-radius:8px;background:#100c0d;color:#fff;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;unicode-bidi:plaintext}
-  .bottom{border-top:1px solid #ffffff12}
-  .bottom-inner{min-height:55px;display:grid;place-items:center;color:var(--subtle);font-size:11px;line-height:1.5}
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
   dialog{width:min(520px,calc(100% - 30px));max-height:calc(100% - 30px);margin:auto;padding:0;border:1px solid #574146;border-radius:18px;background:#181415;color:var(--text);box-shadow:0 24px 96px #000b;overflow:auto}
   dialog::backdrop{background:#000a;backdrop-filter:blur(5px)}
@@ -85,18 +79,111 @@
   .editor-actions button{min-height:41px;padding:0 17px;border-radius:8px;font-size:14px;font-weight:800}
   .cancel{background:#292124;color:#f3e8ea;border:1px solid #574449}
   .save{background:var(--accent);color:var(--ink);border:1px solid #ff7c85}.save:hover{background:#ff7983}
-  @media(max-width:600px){.shell{width:calc(100% - 32px)}.top-inner{min-height:65px;padding-block:9px;gap:10px}.top-actions{gap:8px}.brand{font-size:18px}.entry-count svg{display:none}.upload{min-height:35px;padding-inline:9px;gap:5px}main{width:calc(100% - 32px);padding:40px 0}.intro{margin-bottom:25px}.machine{padding:10px;border-radius:16px}.viewport{border-radius:9px}.selection::before{left:9px}.selection::after{right:9px}.reel-cell{left:19px;right:19px}.bottom-inner{min-height:51px}.editor{padding:18px}}
+  @media(max-width:600px){.shell{width:calc(100% - 32px)}.top-inner{min-height:65px;padding-block:9px;gap:10px}.top-actions{gap:8px}.brand{font-size:18px}.entry-count svg{display:none}.upload{min-height:35px;padding-inline:9px;gap:5px}main{width:calc(100% - 32px);padding:40px 0}.intro{margin-bottom:27px}.eyebrow{margin-bottom:10px}h1{font-size:clamp(25px,8.3vw,45px)}.controls{margin-top:26px}.viewport{border-radius:9px}.selection::before{left:9px}.selection::after{right:9px}.reel-cell{left:19px;right:19px}.editor{padding:18px}}
   @media(max-width:400px){.top-actions{flex-direction:column-reverse;align-items:flex-end;gap:4px}.brand{font-size:17px}.entry-count{font-size:10px}.entry-count strong{font-size:11px}.upload{font-size:11px}.upload svg{width:12px;height:12px}}
   @media(max-width:355px){main,.shell{width:calc(100% - 24px)}.brand{font-size:16px}}
   @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
+<script type="text/plain" id="black-han-sans-license">
+Copyright 2015 The Black Han Sans Project Authors (https://github.com/zesstype/Black-Han-Sans)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+https://openfontlicense.org
+
+
+-----------------------------------------------------------
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+-----------------------------------------------------------
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide
+development of collaborative font projects, to support the font creation
+efforts of academic and linguistic communities, and to provide a free and
+open framework in which fonts may be shared and improved in partnership
+with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and
+redistributed freely as long as they are not sold by themselves. The
+fonts, including any derivative works, can be bundled, embedded, 
+redistributed and/or sold with any software provided that any reserved
+names are not used by derivative works. The fonts and derivatives,
+however, cannot be released under any other type of license. The
+requirement for fonts to remain under this license does not apply
+to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+"Font Software" refers to the set of files released by the Copyright
+Holder(s) under this license and clearly marked as such. This may
+include source files, build scripts and documentation.
+
+"Reserved Font Name" refers to any names specified as such after the
+copyright statement(s).
+
+"Original Version" refers to the collection of Font Software components as
+distributed by the Copyright Holder(s).
+
+"Modified Version" refers to any derivative made by adding to, deleting,
+or substituting -- in part or in whole -- any of the components of the
+Original Version, by changing formats or by porting the Font Software to a
+new environment.
+
+"Author" refers to any designer, engineer, programmer, technical
+writer or other person who contributed to the Font Software.
+
+PERMISSION & CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the Font Software, to use, study, copy, merge, embed, modify,
+redistribute, and sell modified and unmodified copies of the Font
+Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components,
+in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled,
+redistributed and/or sold with any software, provided that each copy
+contains the above copyright notice and this license. These can be
+included either as stand-alone text files, human-readable headers or
+in the appropriate machine-readable metadata fields within text or
+binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font
+Name(s) unless explicit written permission is granted by the corresponding
+Copyright Holder. This restriction only applies to the primary font name as
+presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+Software shall not be used to promote, endorse or advertise any
+Modified Version, except to acknowledge the contribution(s) of the
+Copyright Holder(s) and the Author(s) or with their explicit written
+permission.
+
+5) The Font Software, modified or unmodified, in part or in whole,
+must be distributed entirely under this license, and must not be
+distributed under any other license. The requirement for fonts to
+remain under this license does not apply to any document created
+using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are
+not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.
+</script>
 </head>
 <body>
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" style="position:absolute"><defs>
   <symbol id="icon-upload" viewBox="0 0 24 24"><path d="M12 15V4m-4 4 4-4 4 4M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="icon-people" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2m16 0v-2a4 4 0 0 0-3-3.87M17 3.13a4 4 0 0 1 0 7.75" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/><circle cx="10" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="1.65"/></symbol>
-  <symbol id="icon-spark" viewBox="0 0 24 24"><path d="M12 2.7c1.5 5.7 3.5 7.7 9.3 9.3-5.8 1.6-7.8 3.6-9.3 9.3-1.5-5.7-3.5-7.7-9.3-9.3 5.8-1.6 7.8-3.6 9.3-9.3Z" fill="currentColor"/></symbol>
-  <symbol id="icon-spin" viewBox="0 0 24 24"><path d="M20.6 10a8.5 8.5 0 0 0-14.5-4l-2 2.2m0 0V4m0 4.2h4.2M3.4 14a8.5 8.5 0 0 0 14.5 4l2-2.2m0 0V20m0-4.2h-4.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
 </defs></svg>
 <header class="top">
@@ -110,26 +197,24 @@
 </header>
 <main>
   <div class="intro">
-    <div class="eyebrow" aria-hidden="true"><svg><use href="#icon-spark"/></svg> LUCKY DRAW</div>
-    <h1>행운의 주인공은?</h1>
+    <div class="eyebrow" aria-hidden="true"><span class="star">✦</span><span>LUCKY DRAW</span><span class="star">✦</span></div>
+    <h1 class="title-letters">행운의 주인공은?</h1>
   </div>
   <section class="machine" id="machine" data-state="empty" aria-label="당첨자 추첨 슬롯">
-    <div class="deck-head" aria-hidden="true"><span class="deck-label"><span class="lamp"></span> DRAW SLOT</span><span class="state" id="state">STANDBY</span></div>
     <div class="viewport" id="viewport" aria-hidden="true">
       <div class="selection"></div>
       <div class="track-mask"><div class="track" id="track">
         <div class="reel-cell"><span class="reel-name" dir="auto"></span></div><div class="reel-cell"><span class="reel-name" dir="auto"></span></div><div class="reel-cell"><span class="reel-name" dir="auto"></span></div><div class="reel-cell"><span class="reel-name" dir="auto"></span></div>
       </div></div>
     </div>
-    <p class="sr-only" id="announcement" role="status" aria-live="polite" aria-atomic="true"></p>
+    <p class="sr-only" id="announcement" role="status" aria-live="polite" aria-atomic="true">후보자 명단을 등록해 주세요</p>
   </section>
   <div class="controls">
-    <button type="button" class="draw-btn" id="draw" disabled><svg width="22" height="22" aria-hidden="true"><use href="#icon-spin"/></svg><span id="draw-label">돌리기</span></button>
-    <p class="hint" id="hint">상단의 ‘후보자 명단 등록’ 버튼으로 시작하세요.</p>
+    <button type="button" class="draw-btn" id="draw" disabled><span class="draw-face"><span id="draw-label">돌리기</span></span></button>
+    <p class="hint" id="hint"></p>
     <button type="button" class="full-winner" id="full-winner" aria-haspopup="dialog" hidden>전체 이름 보기</button>
   </div>
 </main>
-<footer class="bottom"><div class="shell bottom-inner">IT협력팀</div></footer>
 <dialog id="dialog" aria-labelledby="editor-title" aria-describedby="editor-instructions">
   <form class="editor" id="editor" novalidate>
     <div class="editor-head">
@@ -157,6 +242,8 @@
 (() => {
   const $ = id => document.getElementById(id);
   const MAX_NAMES = 1000, DURATION = 7000;
+  const EMPTY_LABEL = '후보자 명단을 등록해 주세요';
+  const STANDBY_LABEL = 'LUCKY DRAW';
   const machine = $('machine'), viewport = $('viewport'), track = $('track');
   const cells = Array.from(track.children);
   const upload = $('upload'), draw = $('draw'), drawLabel = $('draw-label');
@@ -180,10 +267,24 @@
   cells.forEach((cell, index) => { cell.style.top = `calc(var(--step) * ${index - 2.5})`; });
   const mod = (i, n) => ((i % n) + n) % n;
 
-  // The reel position and sound cadence share the same ease-out curve.
-  const EASE_POWER = 4;
-  const easeOut = t => 1 - (1 - t) ** EASE_POWER;
-  const reelSpeed = t => (1 - t) ** (EASE_POWER - 1);
+  // For long lists, let the early rush fall off sooner while keeping a gradual final glide.
+  // All three terms share the same clock; their derivative sets the click intensity.
+  function makeReelMotion(distance, candidateCount) {
+    const ratio = Math.max(0, Math.min(1, (candidateCount - 30) / 570));
+    const blend = 1 - (1 - ratio) ** 2;
+    const glide = Math.min(45, distance * .24) * blend;
+    const rush = distance * blend - glide;
+    const classic = distance * (1 - blend);
+    const glidePower = 2.1;
+    return t => {
+      const u = 1 - t;
+      const u2 = u * u, u3 = u2 * u, u4 = u2 * u2, u7 = u3 * u4;
+      const glideRate = u ** (glidePower - 1);
+      const remaining = classic * u4 + rush * u7 * u + glide * glideRate * u;
+      const speed = (4 * classic * u3 + 8 * rush * u7 + glidePower * glide * glideRate) * 1000 / DURATION;
+      return {traveled:Math.max(0, distance - remaining), speed};
+    };
+  }
 
   function makeDrawSound() {
     let audio, output, clickBuffer, spin, chime;
@@ -397,11 +498,11 @@
       const cell = cells[i], offset = i - 2;
       if (replace) {
         const entry = reel.length ? reel[mod(index + offset, reel.length)] : null;
-        const label = entry ? reelLabel(entry.name) : null;
-        labels[i].textContent = label ? label.text : offset === 0 ? '명단을 등록해 주세요' : '— — —';
-        cell.style.fontSize = label ? `${label.fit}px` : '';
-        cell.classList.toggle('is-empty', !entry);
-        cell.classList.toggle('preview', !entry && offset !== 0);
+        const instruction = !entry && offset === 0 && !candidates.length;
+        const value = entry?.name ?? (offset === 0 ? (instruction ? EMPTY_LABEL : STANDBY_LABEL) : '');
+        const label = value ? reelLabel(value) : null;
+        labels[i].textContent = instruction ? EMPTY_LABEL : (label?.text ?? '');
+        cell.style.fontSize = label ? (instruction ? `min(${label.fit}px, clamp(15px, 3.5vw, 28px))` : `${label.fit}px`) : '';
         cell.classList.toggle('is-center', offset === 0);
       }
       const focus = Math.max(0, 1 - Math.abs(offset + part));
@@ -423,7 +524,6 @@
     const busy = state === 'spinning';
     const complete = state === 'done';
     machine.dataset.state = state;
-    $('state').textContent = {empty:'STANDBY',ready:'READY',spinning:'DRAWING',done:'WINNER'}[state];
     draw.disabled = busy || !candidates.length;
     upload.disabled = busy;
     draw.classList.toggle('is-spinning', busy);
@@ -431,18 +531,17 @@
     hint.textContent = message;
     hint.classList.toggle('is-winner', complete);
     syncWinnerControl();
-    announcement.textContent = complete ? (fullWinner.hidden ? `최종 당첨자: ${winner.name}` : '최종 당첨자가 확정되었습니다. 전체 이름 보기 버튼에서 확인하세요.') : message;
+    announcement.textContent = complete ? (fullWinner.hidden ? `최종 당첨자: ${winner.name}` : '최종 당첨자가 확정되었습니다. 전체 이름 보기 버튼에서 확인하세요.') : state === 'empty' ? EMPTY_LABEL : message;
   }
   function setCandidates(entries) {
     candidates = entries;
-    reel = entries;
-    winner = null;
-    selected = reel[0] ?? null;
+    reel = [];
+    selected = winner = null;
     $('count').textContent = number.format(entries.length);
     sizes.clear();
     paint(0, 0, true);
     if (entries.length) setState('ready', `${entries.length}명이 등록되었습니다. 돌리기를 눌러 추첨하세요.`);
-    else setState('empty', '상단의 ‘후보자 명단 등록’ 버튼으로 시작하세요.');
+    else setState('empty', '');
   }
   upload.addEventListener('click', () => {
     if (spinning || dialog.open) return;
@@ -492,7 +591,7 @@
     setState('spinning', '후보자 중 당첨자를 뽑고 있습니다.');
     drawSound.start();
     const started = performance.now();
-    const maxRowsPerSecond = distance * EASE_POWER * 1000 / DURATION;
+    const motion = makeReelMotion(distance, n);
     function frame(now) {
       const t = Math.max(0, Math.min(1, (now - started) / DURATION));
       if (t >= 1) {
@@ -506,10 +605,10 @@
       }
       if (!still) {
         // Monotonic ease-out: constant direction, fast start, speed approaches zero.
-        const traveled = distance * easeOut(t);
+        const {traveled, speed} = motion(t);
         const whole = Math.floor(traveled);
         paint(mod(start - whole, n), traveled - whole);
-        drawSound.move(traveled, maxRowsPerSecond * reelSpeed(t));
+        drawSound.move(traveled, speed);
       }
       requestAnimationFrame(frame);
     }
